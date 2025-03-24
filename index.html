@@ -4,18 +4,13 @@
   <meta charset="UTF-8" />
   <title>Redirecting...</title>
   <script>
-    window.onload = function () {
-      const ref = document.referrer;
-      const target = "https://www.vitura.com.tw/zh-TW/products/limmunec_capsule";
-
-      if (ref.includes("?")) {
-        const query = ref.split("?")[1];
-        window.location.href = `${target}?${query}`;
-      } else {
-        window.location.href = target;
-      }
-    }
-  </script>
+  window.onload = function () {
+    const target = "https://www.vitura.com.tw/zh-TW/products/limmunec_capsule";
+    const query = window.location.search;
+    const finalURL = query ? `${target}${query}` : target;
+    window.location.href = finalURL;
+  }
+</script>
 </head>
 <body>
   <p>正在跳轉到商品頁，請稍候…</p>
