@@ -14,26 +14,30 @@
       return results ? decodeURIComponent(results[1]) : '';
     }
 
-    // 取得 URL 上的 UTM 參數
+    // 抓取原始 URL 中的 UTM 參數
     const utmSource = getURLParameter('utm_source');
     const utmCampaign = getURLParameter('utm_campaign');
-    const utmMedium = getURLParameter('utm_medium');  // 如果有其他 UTM 參數，也可以一起抓取
+    const utmMedium = getURLParameter('utm_medium');
+    const adMedia = getURLParameter('adMedia');
+    const adCode = getURLParameter('adCode');
 
-    // 依據是否有 UTM 參數，構建最終跳轉 URL
+    // 設定最終跳轉 URL
     let finalURL = target;
     const params = [];
 
-    // 把 UTM 參數附加到最終 URL
+    // 如果抓到 UTM 參數，將它們添加到最終 URL
     if (utmSource) params.push("utm_source=" + utmSource);
     if (utmCampaign) params.push("utm_campaign=" + utmCampaign);
     if (utmMedium) params.push("utm_medium=" + utmMedium);
+    if (adMedia) params.push("adMedia=" + adMedia);
+    if (adCode) params.push("adCode=" + adCode);
 
-    // 如果有參數，將它們加到最終 URL
+    // 如果有 UTM 參數，將它們加到最終 URL
     if (params.length > 0) {
       finalURL += "?" + params.join("&");
     }
 
-    // 重定向到最終的 URL
+    // 重定向到最終 URL
     window.location.href = finalURL;
   }
   </script>
