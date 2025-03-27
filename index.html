@@ -5,6 +5,7 @@
   <title>Redirecting...</title>
   <script>
   window.onload = function () {
+    // 目標頁面
     const target = "https://www.vitura.com.tw/zh-TW/products/limmunec_capsule";
     
     // 獲取 URL 中的 UTM 參數
@@ -13,21 +14,26 @@
       return results ? decodeURIComponent(results[1]) : '';
     }
 
-    // 取得 UTM 參數
+    // 取得 URL 上的 UTM 參數
     const utmSource = getURLParameter('utm_source');
     const utmCampaign = getURLParameter('utm_campaign');
     const utmMedium = getURLParameter('utm_medium');  // 如果有其他 UTM 參數，也可以一起抓取
 
-    // 構建最終的 URL，若有 UTM 參數則附加它們
+    // 依據是否有 UTM 參數，構建最終跳轉 URL
     let finalURL = target;
-    if (utmSource && utmCampaign) {
-      finalURL += `?utm_source=${utmSource}&utm_campaign=${utmCampaign}`;
-      if (utmMedium) {
-        finalURL += `&utm_medium=${utmMedium}`;
-      }
+    const params = [];
+
+    // 把 UTM 參數附加到最終 URL
+    if (utmSource) params.push("utm_source=" + utmSource);
+    if (utmCampaign) params.push("utm_campaign=" + utmCampaign);
+    if (utmMedium) params.push("utm_medium=" + utmMedium);
+
+    // 如果有參數，將它們加到最終 URL
+    if (params.length > 0) {
+      finalURL += "?" + params.join("&");
     }
 
-    // 重定向到最終 URL
+    // 重定向到最終的 URL
     window.location.href = finalURL;
   }
   </script>
