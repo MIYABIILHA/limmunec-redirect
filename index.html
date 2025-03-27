@@ -6,11 +6,31 @@
   <script>
   window.onload = function () {
     const target = "https://www.vitura.com.tw/zh-TW/products/limmunec_capsule";
-    const query = window.location.search;
-    const finalURL = query ? `${target}${query}` : target;
+    
+    // 獲取 URL 中的 UTM 參數
+    function getURLParameter(name) {
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      return results ? decodeURIComponent(results[1]) : '';
+    }
+
+    // 取得 UTM 參數
+    const utmSource = getURLParameter('utm_source');
+    const utmCampaign = getURLParameter('utm_campaign');
+    const utmMedium = getURLParameter('utm_medium');  // 如果有其他 UTM 參數，也可以一起抓取
+
+    // 構建最終的 URL，若有 UTM 參數則附加它們
+    let finalURL = target;
+    if (utmSource && utmCampaign) {
+      finalURL += `?utm_source=${utmSource}&utm_campaign=${utmCampaign}`;
+      if (utmMedium) {
+        finalURL += `&utm_medium=${utmMedium}`;
+      }
+    }
+
+    // 重定向到最終 URL
     window.location.href = finalURL;
   }
-</script>
+  </script>
 </head>
 <body>
   <p>正在跳轉到商品頁，請稍候…</p>
